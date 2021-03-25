@@ -1,7 +1,7 @@
-var accordion = require('accordion')
-var knolling = require('knolling')
+var Accordion = require('accordion');
+var Knolling = require('knolling');
 
 module.exports = {
-	accordion,
-	knolling
+	Accordion,
+	Knolling
 }

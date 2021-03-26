@@ -43,6 +43,7 @@ let knolling = new Knolling(wrappers, {
   // options with defaults
 
   itemSelector: ".knolling-el",
+  // knolling elements class name
 
   layout: 'grid',
   // alignment style
@@ -77,7 +78,7 @@ import { Slider } from 'tbd';
 let slider = new Slider('.slider-container', {
   // options with defaults
 
-  sliderElement: '.slider-element'
+  itemSelector: '.slider-element'
   // sliding elements class name
 })
 ```

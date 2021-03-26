@@ -12,6 +12,7 @@ npm install tbd
 ```
 
 ### Accordion
+
 ``` html
 <div class="accordion-element">
   <div class="show-hide">...</div>
@@ -19,7 +20,7 @@ npm install tbd
 ```
 
 ``` js
-import { Accordion } from 'tbd;
+import { Accordion } from 'tbd';
 
 let accordion = new Accordion('.accordion-element', {
   // options with defaults
@@ -60,6 +61,25 @@ let knolling = new Knolling(wrappers, {
   compact: false,
   // if layout is set to 'masonry', this will make rows as even as possible
 });
+```
+
+### Slider
+
+```html
+<div class="slider-container">
+  <div class="slider-element">...</div>
+</div>
+```
+
+``` js
+import { Slider } from 'tbd';
+
+let slider = new Slider('.slider-container', {
+  // options with defaults
+
+  sliderElement: '.slider-element'
+  // sliding elements class name
+})
 ```
 
 stay tuned for more ...

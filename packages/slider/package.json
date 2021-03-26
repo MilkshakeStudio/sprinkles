@@ -1,18 +1,15 @@
 {
-  "name": "usage",
+  "name": "slider",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "accordion": "1.0.0",
-    "knolling": "1.0.0",
-    "slider": "1.0.0",
     "gsap": "^3.6.1",
     "lodash": "^4.17.21"
   }

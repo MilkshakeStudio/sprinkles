@@ -12,14 +12,15 @@ npm install tbd
 ```
 
 ### Accordion
-```
+``` html
 <div class="accordion-element">
   <div class="show-hide">...</div>
 </div>
 ```
 
-```
+``` js
 import { Accordion } from 'tbd;
+
 let accordion = new Accordion('.accordion-element', {
   // options with defaults
 
@@ -33,7 +34,7 @@ let accordion = new Accordion('.accordion-element', {
 
 ### Knolling
 
-```
+``` js
 import { Knolling } from 'tbd';
 
 let wrappers = document.querySelectorAll(".knolling-wrapper");

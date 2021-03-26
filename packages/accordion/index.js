@@ -2,7 +2,7 @@ var { TweenLite } = require('gsap');
 
 class Accordion {
 	constructor(className, options) {
-		if (!className) return;
+		if (!className) throw "Please provide a valid wrapper.";
 
 		this.items = document.querySelectorAll(className);
 

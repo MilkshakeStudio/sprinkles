@@ -4,7 +4,6 @@ var dragging = require('./dragging');
 
 class Knolling{
    constructor(wrapper, options) { 
-      // check if there is a wrapper
       if (!wrapper) throw "Please provide a valid wrapper."
 
       this.wrapper = wrapper;

@@ -12,10 +12,23 @@ npm install tbd
 ```
 
 ### Accordion
+```
+<div class="accordion-element">
+  <div class="show-hide">...</div>
+</div>
+```
 
 ```
 import { Accordion } from 'tbd;
-let accordion = new Accordion('.accordion-element');
+let accordion = new Accordion('.accordion-element', {
+  // options with defaults
+
+  hideable: '.show-hide',
+  // hideable content class name
+
+  duration: 0.5
+  // duration of toggle animation
+});
 ```
 
 ### Knolling
@@ -25,36 +38,31 @@ import { Knolling } from 'tbd';
 
 let wrappers = document.querySelectorAll(".knolling-wrapper");
 let knolling = new Knolling(wrappers, {
-  itemSelector: ".knolling-el",
-  layout: 'grid,
-  columns: 3,
-  gutter:".gutter",
-  draggable: true
-});
-```
-
-#### Options
-```
-let knolling = new Knolling( wrappers {
   // options with defaults
 
-  layout: 'grid',
+  itemSelector: ".knolling-el",
+
+  layout: 'grid,
   // alignment style
   // options: 'grid' and 'masonry'
 
-  columns: 4,
+  columns: 3,
   // number of columns
 
   gutter: 30,
   // space between columns and rows
   // accepts number (px) or class selector ('.gutter')
 
-  draggable: false,
+  draggable: false
   // allow or disable drag functionality
 
-  compact: true,
+  compact: false,
   // if layout is set to 'masonry', this will make rows as even as possible
 });
 ```
 
 stay tuned for more ...
+
+---
+
+Created by [Milkshake Studio](https://milkshake.studio/)

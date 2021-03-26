@@ -1,10 +1,15 @@
 var { TweenLite } = require('gsap');
 
 class Accordion {
-	constructor(className) {
+	constructor(className, options) {
 		if (!className) return;
 
 		this.items = document.querySelectorAll(className);
+
+		this.options = Object.assign({
+			hideable: '.show-hide',
+			duration: 0.5
+		}, options);
 
 		this.initialHide();
 		this.bindEvents();
@@ -12,7 +17,7 @@ class Accordion {
 
 	initialHide() {
 		this.items.forEach(item => {
-			let showHide = item.querySelector('.show-hide');
+			let showHide = item.querySelector(this.options.hideable);
 			showHide.style.height = 0;
 			showHide.style.overflow = 'hidden';
 		})
@@ -27,7 +32,7 @@ class Accordion {
 	}
 
 	toggle(el){
-		let showHide = el.querySelector('.show-hide');
+		let showHide = el.querySelector(this.options.hideable);
 		let height = el.classList.contains('open')
 			? 0
 			: this.calcHeight(showHide);
@@ -38,7 +43,7 @@ class Accordion {
 
 		TweenLite.to(showHide, {
 			height: height,
-			duration: 0.5,
+			duration: this.options.duration,
 			delay: 0,
 			ease: "Power1.inOut"
 		})

@@ -43,7 +43,7 @@ let knolling = new Knolling(wrappers, {
 
   itemSelector: ".knolling-el",
 
-  layout: 'grid,
+  layout: 'grid',
   // alignment style
   // options: 'grid' and 'masonry'
 

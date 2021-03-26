@@ -54,7 +54,7 @@ let knolling = new Knolling(wrappers, {
   // space between columns and rows
   // accepts number (px) or class selector ('.gutter')
 
-  draggable: false
+  draggable: false,
   // allow or disable drag functionality
 
   compact: false,

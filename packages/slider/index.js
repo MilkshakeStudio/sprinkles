@@ -33,6 +33,7 @@ class Slider {
 
 	// ---- start listeners ---- //
 	startListeners() {
+		// TODO: check if width is wider than wrapper - if not dont draggg
 		this.wrapper.addEventListener('dragstart', ev => this.dragStart(this, ev));
 		this.wrapper.addEventListener('dragover', ev => this.dragging(this, ev));
 		this.wrapper.addEventListener('dragend', () => this.dragEnd(this));
@@ -48,8 +49,6 @@ class Slider {
 
 	// ---- dragging ---- //
 	dragging(self, ev) {
-		if(!this.xOffsets) return;
-
 		let delta = self.initialX - ev.pageX;
 		
 		self.updatedXOffsets = this.xOffsets.map(pos => pos - delta);
@@ -59,6 +58,7 @@ class Slider {
 
 	// ---- drag end ---- //
 	dragEnd(self) {
+		if(!self.updatedXOffsets) return;
 		self.xOffsets = self.updatedXOffsets;
 		self.updatedXOffsets = null;
 	}
@@ -72,11 +72,11 @@ class Slider {
 
 	// ---- get x-offsets ---- //
 	getXOffsets(){
-		this.xOffsets = [0];
+		this.xOffsets = [this.gutterWidth];
 		this.maxHeight = 0;
 
-		for(let i = 1; i < this.items.length; i++){
-			let x = this.xOffsets[i - 1] + this.items[i - 1].offsetWidth + this.gutterWidth;
+		for(let i = 0; i < this.items.length; i++){
+			let x = this.xOffsets[i] + this.items[i].offsetWidth + this.gutterWidth;
 			this.xOffsets.push(x);
 
 			if(this.items[i].offsetHeight > this.maxHeight) this.maxHeight = this.items[i].offsetHeight;
@@ -115,8 +115,8 @@ class Slider {
 	// ---- check for ends ---- //
 	checkForEnds() {
 		// dragged too far right
-		if(this.updatedXOffsets[0] > 0){
-			this.updatedXOffsets = this.updatedXOffsets.map(pos => pos - this.updatedXOffsets[0]);
+		if(this.updatedXOffsets[0] > this.gutterWidth){
+			this.updatedXOffsets = this.updatedXOffsets.map(pos => pos - this.updatedXOffsets[0] + this.gutterWidth);
 		}
 		
 		// dragged too far left

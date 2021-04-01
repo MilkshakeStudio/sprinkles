@@ -8,7 +8,8 @@ class Slider {
 		this.items = [];
 
 		this.options = Object.assign({
-			itemSelector: '.slider-element'
+			itemSelector: '.slider-element',
+			gutter: 30
 		});
 
 		this.init();
@@ -18,8 +19,16 @@ class Slider {
 	init(){
 		this.items = this.wrapper.querySelectorAll(this.options.itemSelector);
 
+		this.setGutterWidth();
 		this.getXOffsets();
 		this.setupSlider();
+	}
+
+	// ---- set gutter width ---- //
+	setGutterWidth() {
+		this.gutterWidth = typeof this.options.gutter == 'number'
+			? this.options.gutter
+			: this.wrapper.querySelector(this.options.gutter).offsetWidth;
 	}
 
 	// ---- setup slider ---- //
@@ -39,7 +48,7 @@ class Slider {
 	getXOffsets(){
 		this.xOffsets = [0];
 		for(let i = 1; i < this.items.length; i++){
-			let x = this.xOffsets[i - 1] + this.items[i - 1].offsetWidth;
+			let x = this.xOffsets[i - 1] + this.items[i - 1].offsetWidth + this.gutterWidth;
 			this.xOffsets.push(x);
 		}
 	}

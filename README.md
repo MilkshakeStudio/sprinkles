@@ -78,8 +78,12 @@ import { Slider } from 'tbd';
 let slider = new Slider('.slider-container', {
   // options with defaults
 
-  itemSelector: '.slider-element'
+  itemSelector: '.slider-element',
   // sliding elements class name
+
+  gutter: 30
+  // space between columns and rows
+  // accepts number (px) or class selector ('.gutter')
 })
 ```
 

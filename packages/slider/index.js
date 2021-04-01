@@ -13,6 +13,7 @@ class Slider {
 		});
 
 		this.init();
+		this.startListeners();
 	}
 
 	// ---- init ---- //
@@ -21,7 +22,19 @@ class Slider {
 
 		this.setGutterWidth();
 		this.getXOffsets();
+		this.wrapperSetup();
 		this.setupSlider();
+	}
+
+	// ---- start listeners ---- //
+	startListeners() {
+		this.wrapper.addEventListener('dragstart', ev => this.hideGhostImg(ev));
+		this.wrapper.addEventListener('drag', ev => this.dragging(this, ev));
+	}
+
+	// ---- dragging ---- //
+	dragging(self, ev) {
+		console.log('dragging', ev)
 	}
 
 	// ---- set gutter width ---- //
@@ -29,6 +42,28 @@ class Slider {
 		this.gutterWidth = typeof this.options.gutter == 'number'
 			? this.options.gutter
 			: this.wrapper.querySelector(this.options.gutter).offsetWidth;
+	}
+
+	// ---- get x-offsets ---- //
+	getXOffsets(){
+		this.xOffsets = [0];
+		this.maxHeight = 0;
+
+		for(let i = 1; i < this.items.length; i++){
+			let x = this.xOffsets[i - 1] + this.items[i - 1].offsetWidth + this.gutterWidth;
+			this.xOffsets.push(x);
+
+			if(this.items[i].offsetHeight > this.maxHeight) this.maxHeight = this.items[i].offsetHeight;
+		}
+	}
+
+	// ---- wrapper setup ---- //
+	wrapperSetup(){
+		this.wrapper.style.position = 'relative';
+		this.wrapper.style.overflow = 'hidden';
+		this.wrapper.style.maxWidth = '100vw';
+		this.wrapper.style.height = `${this.maxHeight}px`;
+		this.wrapper.setAttribute('draggable', true);
 	}
 
 	// ---- setup slider ---- //
@@ -44,13 +79,11 @@ class Slider {
 		})
 	}
 
-	// ---- get x-offsets ---- //
-	getXOffsets(){
-		this.xOffsets = [0];
-		for(let i = 1; i < this.items.length; i++){
-			let x = this.xOffsets[i - 1] + this.items[i - 1].offsetWidth + this.gutterWidth;
-			this.xOffsets.push(x);
-		}
+	// ---- hide ghost drag img ---- //
+	hideGhostImg(ev) {
+		var img = new Image();
+		img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+		ev.dataTransfer.setDragImage(img, 0, 0);
 	}
 }
 

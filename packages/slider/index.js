@@ -48,11 +48,13 @@ class Slider {
 
 	// ---- dragging ---- //
 	dragging(self, ev) {
+		if(!this.xOffsets) return;
+
 		let delta = self.initialX - ev.pageX;
 		
 		self.updatedXOffsets = this.xOffsets.map(pos => pos - delta);
 
-		self.setupSlider();
+		self.checkForEnds();
 	}
 
 	// ---- drag end ---- //
@@ -93,14 +95,14 @@ class Slider {
 	// ---- setup slider ---- //
 	setupSlider(){
 		let offsets = this.updatedXOffsets ? this.updatedXOffsets : this.xOffsets;
-
+		
 		TweenLite.to(this.items, {
 			position: 'absolute',
 			left: function(i, el){
 				return offsets[i];
 			},
 			duration: 0.2
-		})
+		});
 	}
 
 	// ---- hide ghost drag img ---- //
@@ -108,6 +110,22 @@ class Slider {
 		var img = new Image();
 		img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 		ev.dataTransfer.setDragImage(img, 0, 0);
+	}
+
+	// ---- check for ends ---- //
+	checkForEnds() {
+		// dragged too far right
+		if(this.updatedXOffsets[0] > 0){
+			this.updatedXOffsets = this.updatedXOffsets.map(pos => pos - this.updatedXOffsets[0]);
+		}
+		
+		// dragged too far left
+		else if(this.updatedXOffsets[this.updatedXOffsets.length - 1] < window.innerWidth){
+			let offDistance = window.innerWidth - this.updatedXOffsets[this.updatedXOffsets.length - 1];
+			this.updatedXOffsets = this.updatedXOffsets.map(pos => pos + offDistance);
+		}
+
+		this.setupSlider();
 	}
 }
 

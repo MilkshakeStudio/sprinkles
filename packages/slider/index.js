@@ -9,7 +9,8 @@ class Slider {
 
 		this.options = Object.assign({
 			itemSelector: '.slider-element',
-			gutter: 30
+			gutter: 30,
+			arrows: true
 		});
 
 		// location of drag start
@@ -29,11 +30,20 @@ class Slider {
 		this.getXOffsets();
 		this.wrapperSetup();
 		this.setupSlider();
+
+		if(this.options.arrows){
+			this.setupArrows();
+		}
 	}
 
 	// ---- start listeners ---- //
 	startListeners() {
-		// TODO: check if width is wider than wrapper - if not dont draggg
+		// not wide enough to be draggable
+		if(this.xOffsets[this.xOffsets.length - 1] < window.innerWidth) {
+			this.wrapper.style.cursor = 'default';
+			return;
+		};
+
 		this.wrapper.addEventListener('dragstart', ev => this.dragStart(this, ev));
 		this.wrapper.addEventListener('dragover', ev => this.dragging(this, ev));
 		this.wrapper.addEventListener('dragend', () => this.dragEnd(this));
@@ -88,6 +98,7 @@ class Slider {
 		this.wrapper.style.position = 'relative';
 		this.wrapper.style.overflow = 'hidden';
 		this.wrapper.style.maxWidth = '100vw';
+		this.wrapper.style.cursor = 'grab';
 		this.wrapper.style.height = `${this.maxHeight}px`;
 		this.wrapper.setAttribute('draggable', true);
 	}
@@ -103,6 +114,21 @@ class Slider {
 			},
 			duration: 0.2
 		});
+	}
+
+	// ---- setup arrows ---- //
+	setupArrows(){
+		let right = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+		right.setAttribute("d","M0.499999 0.5L8.5 9L0.5 17.5");
+		right.style.stroke = "black";
+		right.style.strokeWidth = "2";
+		this.wrapper.appendChild(right);
+
+		let left = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+		left.setAttribute("d","M9.5 17.5L1.5 9L9.5 0.5");
+		left.style.stroke = "black";
+		left.style.strokeWidth = "2";
+		this.wrapper.appendChild(left);
 	}
 
 	// ---- hide ghost drag img ---- //

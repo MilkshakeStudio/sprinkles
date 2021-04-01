@@ -81,9 +81,12 @@ let slider = new Slider('.slider-container', {
   itemSelector: '.slider-element',
   // sliding elements class name
 
-  gutter: 30
+  gutter: 30,
   // space between columns and rows
   // accepts number (px) or class selector ('.gutter')
+
+  arrows: false
+  // previous/next arrows
 })
 ```
 

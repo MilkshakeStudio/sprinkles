@@ -12,6 +12,11 @@ class Slider {
 			gutter: 30
 		});
 
+		// location of drag start
+		this.initialX = null;
+		this.xOffsets = null;
+		this.updatedXOffsets = null;
+
 		this.init();
 		this.startListeners();
 	}
@@ -28,13 +33,32 @@ class Slider {
 
 	// ---- start listeners ---- //
 	startListeners() {
-		this.wrapper.addEventListener('dragstart', ev => this.hideGhostImg(ev));
-		this.wrapper.addEventListener('drag', ev => this.dragging(this, ev));
+		this.wrapper.addEventListener('dragstart', ev => this.dragStart(this, ev));
+		this.wrapper.addEventListener('dragover', ev => this.dragging(this, ev));
+		this.wrapper.addEventListener('dragend', () => this.dragEnd(this));
+	}
+
+	// ---- drag start ---- //
+	dragStart(self, ev) {
+		self.hideGhostImg(ev);
+
+		// initial mouse position
+		self.initialX = ev.pageX;
 	}
 
 	// ---- dragging ---- //
 	dragging(self, ev) {
-		console.log('dragging', ev)
+		let delta = self.initialX - ev.pageX;
+		
+		self.updatedXOffsets = this.xOffsets.map(pos => pos - delta);
+
+		self.setupSlider();
+	}
+
+	// ---- drag end ---- //
+	dragEnd(self) {
+		self.xOffsets = self.updatedXOffsets;
+		self.updatedXOffsets = null;
 	}
 
 	// ---- set gutter width ---- //
@@ -68,12 +92,12 @@ class Slider {
 
 	// ---- setup slider ---- //
 	setupSlider(){
-		let self = this;
+		let offsets = this.updatedXOffsets ? this.updatedXOffsets : this.xOffsets;
 
 		TweenLite.to(this.items, {
 			position: 'absolute',
 			left: function(i, el){
-				return self.xOffsets[i];
+				return offsets[i];
 			},
 			duration: 0.2
 		})

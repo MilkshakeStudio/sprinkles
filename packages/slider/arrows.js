@@ -1,18 +1,29 @@
-const arrows = {
-	init: function(wrapper){
-		arrows.createArrows('prev', wrapper);
-		arrows.createArrows('next', wrapper);
-	},
+class Arrows {
+	constructor(wrapper, gutterWidth) {
+		if (!wrapper) return;
 
-	createArrows: function(type, wrapper) {
+		this.wrapper = wrapper;
+		this.gutterWidth = gutterWidth;
+
+		this.init();
+	}
+
+	// ---- init ---- //
+	init() {
+		this.createArrows('prev');
+		this.createArrows('next');
+	}
+
+	// ---- create arrows ---- //
+	createArrows(type) {
 		let arrow = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
 		arrow.style.height = '18px';
 		arrow.style.width = '10px';
 		arrow.style.position = 'absolute';
 		arrow.style.top = '50%';
 		type == 'prev'
-			? arrow.style.left = '20px'
-			: arrow.style.right = '20px';
+			? arrow.style.left = `${this.gutterWidth}px`
+			: arrow.style.right = `${this.gutterWidth}px`;
 
 		let path = document.createElementNS("http://www.w3.org/2000/svg", 'path');
 		type == 'prev'
@@ -22,8 +33,8 @@ const arrows = {
 		path.style.fill = "transparent";
 		path.style.strokeWidth = "2";
 		arrow.appendChild(path);
-		wrapper.appendChild(arrow);
+		this.wrapper.appendChild(arrow);
 	}
 }
 
-export default arrows;
+module.exports = Arrows;

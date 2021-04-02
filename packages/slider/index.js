@@ -1,5 +1,5 @@
 const { TweenLite } = require('gsap');
-const arrows = require('./arrows');
+const Arrows = require('./arrows');
 
 class Slider {
 	constructor(className, options) {
@@ -15,16 +15,18 @@ class Slider {
 		});
 
 		// location of drag start
+		this.arrows = null;
 		this.initialX = null;
 		this.xOffsets = null;
 		this.updatedXOffsets = null;
+		this.gutterWidth = null;
 
 		this.init();
 		this.startListeners();
 	}
 
 	// ---- init ---- //
-	init(){
+	init() {
 		this.items = this.wrapper.querySelectorAll(this.options.itemSelector);
 
 		this.setGutterWidth();
@@ -33,8 +35,7 @@ class Slider {
 		this.setupSlider();
 
 		if(this.options.arrows){
-			// console.log(arrows.default)
-			arrows.default.init(this.wrapper);
+			this.arrows = new Arrows(this.wrapper, this.gutterWidth);
 		}
 	}
 
@@ -173,4 +174,4 @@ class Slider {
 	}
 }
 
-module.exports = Slider
+module.exports = Slider;

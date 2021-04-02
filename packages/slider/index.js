@@ -1,4 +1,5 @@
-var { TweenLite } = require('gsap');
+const { TweenLite } = require('gsap');
+const arrows = require('./arrows');
 
 class Slider {
 	constructor(className, options) {
@@ -32,7 +33,8 @@ class Slider {
 		this.setupSlider();
 
 		if(this.options.arrows){
-			this.setupArrows();
+			// console.log(arrows.default)
+			arrows.default.init(this.wrapper);
 		}
 	}
 
@@ -118,16 +120,32 @@ class Slider {
 
 	// ---- setup arrows ---- //
 	setupArrows(){
-		let right = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-		right.setAttribute("d","M0.499999 0.5L8.5 9L0.5 17.5");
-		right.style.stroke = "black";
-		right.style.strokeWidth = "2";
+		let right = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+		right.style.height = '18px';
+		right.style.width = '10px';
+		right.style.position = 'absolute';
+		right.style.right = '20px';
+		right.style.top = '50%';
+		let nextPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+		nextPath.setAttribute("d","M0.499999 0.5L8.5 9L0.5 17.5");
+		nextPath.style.stroke = "black";
+		nextPath.style.fill = "transparent";
+		nextPath.style.strokeWidth = "2";
+		right.appendChild(nextPath);
 		this.wrapper.appendChild(right);
 
-		let left = document.createElementNS("http://www.w3.org/2000/svg", 'path');
-		left.setAttribute("d","M9.5 17.5L1.5 9L9.5 0.5");
-		left.style.stroke = "black";
-		left.style.strokeWidth = "2";
+		let left = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+		left.style.height = '18px';
+		left.style.width = '10px';
+		left.style.position = 'absolute';
+		left.style.left = '20px';
+		left.style.top = '50%';
+		let prevPath = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+		prevPath.setAttribute("d","M9.5 17.5L1.5 9L9.5 0.5");
+		prevPath.style.stroke = "black";
+		prevPath.style.fill = "transparent";
+		prevPath.style.strokeWidth = "2";
+		left.appendChild(prevPath);
 		this.wrapper.appendChild(left);
 	}
 

@@ -42,12 +42,12 @@ export default class Marquee {
       const originalW = this.parent.offsetWidth
 
       // loop through set till the children cover double screen width
-      while (parent.offsetWidth < window.innerWidth * 2) {
+      do {
          children.forEach(child => {
             let clone = child.cloneNode(true)
             parent.appendChild(clone)
          })
-      }
+      } while (this.parent.offsetWidth < window.innerWidth * 2)
 
       const slideX = reverse ? originalW : -originalW
       animate(this.parent, {
